@@ -1,0 +1,21 @@
+---
+category: Journal
+font: font-kalam
+paper: paper-yellow
+ink: ink-pencil
+author: Alex Rivera
+created_at: 2026-10-05T20:00:00.000Z
+---
+✨ Today's Highlights:
+- Built the entire student streak habit tracking engine!
+- Tested notebook paper styling and ruled line backgrounds.
+
+🎯 What I achieved today:
+- Designed realistic spiral binder rings with CSS gradients.
+- Connected student daily check-in habits to keep the streak alive.
+
+🌱 What I learned & challenges overcome:
+- Custom frontmatter in pure .txt files makes notes portable and human-readable.
+
+🙏 Grateful for:
+- Productive coding session and clean architecture.

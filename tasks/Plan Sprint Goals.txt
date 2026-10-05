@@ -1,0 +1,13 @@
+---
+category: TO DO LIST
+font: font-handwriting
+paper: paper-lined
+ink: ink-blue
+author: Alex Rivera
+created_at: 2026-10-05T12:00:00.000Z
+---
+[x] Review Q3 project milestones with the team
+[x] Finalize API schema definitions for auth and notes
+[ ] Complete user testing sessions for streak tracker
+[ ] Verify frontmatter parsing with fs.readFile
+[ ] Prepare deployment notes for staging environment

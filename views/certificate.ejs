@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate of Consistency - <%= student.displayName %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .cert-frame {
+      max-width: 820px;
+      margin: 2rem auto;
+      background: #ffffff;
+      border: 12px double #1e293b;
+      padding: 3.5rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+    }
+    .cert-seal {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 1.5rem auto;
+      background: radial-gradient(circle, #fde047, #ca8a04);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      box-shadow: 0 4px 12px rgba(202, 138, 4, 0.4);
+      border: 3px dashed #78350f;
+    }
+    .cert-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #0f172a;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .cert-name {
+      font-size: 2.5rem;
+      font-family: 'Kalam', cursive, Georgia, serif;
+      color: #1e3a8a;
+      margin: 1.5rem 0 0.5rem 0;
+      border-bottom: 2px solid #cbd5e1;
+      display: inline-block;
+      padding: 0 2.5rem 0.3rem 2.5rem;
+    }
+    .cert-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+      max-width: 620px;
+      margin: 2rem auto;
+      background: #f8fafc;
+      padding: 1.25rem;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+    @media print {
+      body {
+        background: white !important;
+        padding: 0 !important;
+      }
+      .desk-nav, .no-print {
+        display: none !important;
+      }
+      .cert-frame {
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        border: 8px double #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Desk Navigation -->
+  <nav class="desk-nav no-print">
+    <a href="/" class="desk-logo">
+      <span>🏆</span>
+      <div>
+        <div>Certificate of Consistency</div>
+        <div style="font-size: 0.75rem; color: #64748b;">Issued to: <%= student.displayName %></div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="/pomodoro" class="streak-pill" style="background:#fef2f2; border-color:#fecaca; color:#b91c1c;">
+        <span>🍅 Pomodoro Room</span>
+      </a>
+      <a href="/streak" class="streak-pill">
+        <span>🔥 Streak Hub</span>
+      </a>
+      <a href="/" class="btn-logout" style="color: #4f46e5; background: #eef2ff;">
+        &larr; Back to Desk
+      </a>
+    </div>
+  </nav>
+
+  <div class="desk-container">
+    <!-- Action buttons above certificate -->
+    <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; max-width: 820px; margin: 0 auto 1.5rem auto;">
+      <a href="/" style="color: #475569; text-decoration: none; font-weight: 600;">
+        &larr; Return to Notebook
+      </a>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button type="button" onclick="window.print()" class="btn-notebook-save" style="padding: 0.6rem 1.25rem; font-size: 0.9rem;">
+          🖨️ Print / Save PDF
+        </button>
+
+        <button type="button" id="emailCertBtn" class="btn-logout" style="background: #fff7ed; color: #c2410c; border: 1.5px solid #fed7aa; font-weight: 700; padding: 0.6rem 1.25rem;">
+          ✉️ Email to <%= student.email %>
+        </button>
+      </div>
+    </div>
+
+    <!-- Official Certificate -->
+    <div class="cert-frame">
+      <div class="cert-seal">🏆</div>
+      <div style="font-size: 0.85rem; letter-spacing: 4px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+        STUDENT NOTEBOOK ACADEMIC EXCELLENCE
+      </div>
+      <h1 class="cert-title">Certificate of Consistency</h1>
+      <p style="color: #64748b; font-size: 0.95rem;">Weekly Award of Academic Discipline &amp; Habit Mastery</p>
+
+      <div style="margin-top: 1.5rem; font-size: 1.05rem; color: #475569;">
+        This certificate is proudly awarded to:
+      </div>
+
+      <div class="cert-name">
+        <%= student.displayName %>
+      </div>
+      <div style="font-size: 0.95rem; font-weight: 600; color: #64748b; margin-top: 0.25rem;">
+        <%= student.grade || 'Student Scholar' %> • <%= student.email %>
+      </div>
+
+      <p style="max-width: 580px; margin: 1.5rem auto; font-size: 1rem; color: #334155; line-height: 1.6;">
+        In recognition of outstanding dedication, perseverance, and daily habit consistency in maintaining structured planning and deep focus study routines.
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="cert-stats-grid">
+        <div>
+          <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #64748b;">Daily To-Do Streak</div>
+          <div style="font-size: 1.6rem; font-weight: 900; color: #ea580c;">🔥 <%= cert.todoStreak || student.currentStreak %> Days</div>
+        </div>
+        <div>
+          <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #64748b;">Pomodoro Streak</div>
+          <div style="font-size: 1.6rem; font-weight: 900; color: #dc2626;">🍅 <%= cert.pomodoroStreak || student.pomodoro?.currentStreak || 0 %> Days</div>
+        </div>
+        <div>
+          <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #64748b;">Total Focus Time</div>
+          <div style="font-size: 1.6rem; font-weight: 900; color: #2563eb;">⏱️ <%= Math.round((cert.totalFocusMinutes || student.pomodoro?.totalMinutes || 0)/60 * 10)/10 %> hrs</div>
+        </div>
+      </div>
+
+      <!-- Verification Footer -->
+      <div style="margin-top: 2.5rem; border-top: 1px dashed #cbd5e1; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; color: #94a3b8; text-align: left;">
+        <div>
+          <div>Certificate ID: <strong style="color: #475569;"><%= cert.id %></strong></div>
+          <div>Period: <strong style="color: #475569;"><%= cert.weekTitle || 'Weekly Milestone' %></strong></div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #1e293b; margin-bottom: -5px;">Student Notebook Board</div>
+          <div>Authorized Habit Verification</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const emailBtn = document.getElementById('emailCertBtn');
+    if (emailBtn) {
+      emailBtn.addEventListener('click', async () => {
+        emailBtn.disabled = true;
+        emailBtn.textContent = '⏳ Sending to <%= student.email %>...';
+
+        try {
+          const res = await fetch('/api/send-certificate', { method: 'POST' });
+          const data = await res.json();
+          if (data.success) {
+            let msg = `✅ Certificate was emailed to ${data.certificate.recipientEmail}!\nCertificate ID: ${data.certificate.id}`;
+            if (data.emailResult && data.emailResult.previewUrl) {
+              msg += `\n\n📫 Test Email Preview:\n${data.emailResult.previewUrl}`;
+              window.open(data.emailResult.previewUrl, '_blank');
+            }
+            alert(msg);
+          } else {
+            alert('Failed: ' + (data.error || 'Unknown error'));
+          }
+        } catch (e) {
+          alert('Error sending certificate: ' + e.message);
+        } finally {
+          emailBtn.disabled = false;
+          emailBtn.textContent = '✉️ Email to <%= student.email %>';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

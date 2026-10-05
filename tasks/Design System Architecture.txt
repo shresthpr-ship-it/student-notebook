@@ -1,0 +1,19 @@
+---
+category: Class Notes
+font: font-clean
+paper: paper-grid
+ink: ink-black
+author: Alex Rivera
+created_at: 2026-10-05T14:30:00.000Z
+---
+📅 Course: CS 301 - Web Systems Architecture
+👨‍🏫 Professor: Dr. Henderson
+📖 Topic: Express Routing & Server-Side Persistence
+
+🔑 Core Principles:
+1. REST Endpoints: GET /, POST /create, GET /task/:filename, POST /delete/:filename.
+2. File System Integration: Direct file operations using Node's native `fs` methods (writeFile, readFile, readdir, unlink).
+3. Session Security: User isolation, path traversal guards with `path.basename`.
+4. Frontmatter Persistence: Encoding metadata (category, font, paper, ink) seamlessly within plain .txt files.
+
+💡 Takeaway: File-based persistence provides transparent, portable storage without external database overhead.

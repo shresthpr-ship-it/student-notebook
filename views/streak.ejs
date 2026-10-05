@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Streak &amp; Habit Hub</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Top Desk Navigation -->
+  <nav class="desk-nav">
+    <a href="/" class="desk-logo">
+      <span>📓</span>
+      <div>
+        <div>Student Streak &amp; Habits</div>
+        <div style="font-size: 0.75rem; color: #64748b;">Daily To-Do &amp; Pomodoro Consistency Hub</div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="/pomodoro" class="streak-pill" style="background:#fef2f2; border-color:#fecaca; color:#b91c1c;">
+        <span>🍅 Pomodoro Room</span>
+      </a>
+      <a href="/certificate" style="font-size:0.875rem; font-weight:700; color:#ca8a04; text-decoration:none; padding:0.35rem 0.65rem; border-radius:6px; background:#fefce8; border:1px solid #fef08a;">
+        🏆 Certificate
+      </a>
+      <div class="student-tag">
+        <span>👨‍🎓</span>
+        <span><%= student.displayName %></span>
+      </div>
+      <a href="/" class="btn-logout" style="color: #4f46e5; background: #eef2ff;">
+        &larr; Back to Desk
+      </a>
+      <a href="/logout" class="btn-logout">Sign Out</a>
+    </div>
+  </nav>
+
+  <div class="desk-container">
+    <!-- Big Streak Hero -->
+    <div class="streak-hero">
+      <div class="streak-big-flame">🔥</div>
+      <div class="streak-counter-number"><%= student.currentStreak || 0 %> DAY TO-DO STREAK</div>
+      <div class="streak-motto">
+        <% if ((student.currentStreak || 0) === 0) { %>
+          Start your consistency journey today by writing your first To-Do list!
+        <% } else if ((student.currentStreak || 0) < 3) { %>
+          Great start, <%= student.displayName %>! Consistency is building day by day.
+        <% } else if ((student.currentStreak || 0) < 7) { %>
+          You're on fire! Keep writing your daily list to reach the 7-day milestone!
+        <% } else { %>
+          Unstoppable scholar! Outstanding discipline and daily habit!
+        <% } %>
+      </div>
+
+      <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="/" class="btn-notebook-save" style="text-decoration: none; padding: 0.75rem 1.75rem;">
+          ✍️ Write Today's To-Do List
+        </a>
+        <a href="/pomodoro" class="btn-notebook-save" style="background: #dc2626; text-decoration: none; padding: 0.75rem 1.75rem;">
+          🍅 Start Pomodoro Focus
+        </a>
+      </div>
+    </div>
+
+    <!-- Student Stats Summary -->
+    <div class="stats-grid-3">
+      <div class="stat-box">
+        <h4>🔥 To-Do Streak</h4>
+        <div class="number" style="color: #ea580c;"><%= student.currentStreak || 0 %> Days</div>
+      </div>
+      <div class="stat-box">
+        <h4>🍅 Pomodoro Streak</h4>
+        <div class="number" style="color: #dc2626;"><%= student.pomodoro?.currentStreak || 0 %> Days</div>
+      </div>
+      <div class="stat-box">
+        <h4>⏱️ Total Focus Time</h4>
+        <div class="number" style="color: #2563eb;"><%= Math.round((student.pomodoro?.totalMinutes || 0)/60 * 10)/10 %> hrs</div>
+      </div>
+      <div class="stat-box">
+        <h4>📋 To-Do Lists Made</h4>
+        <div class="number" style="color: #16a34a;"><%= student.todoCount || 0 %> Lists</div>
+      </div>
+    </div>
+
+    <!-- Weekly Certificate Card Banner -->
+    <div style="background: #ffffff; border: 2px solid #fed7aa; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-card); flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #c2410c;">
+          WEEKLY ACADEMIC RECOGNITION
+        </div>
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin: 0.2rem 0;">
+          🏆 Certificate of Consistency
+        </h3>
+        <p style="color: #64748b; font-size: 0.875rem;">
+          Will be emailed to: <strong><%= student.email %></strong>
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <a href="/certificate" class="btn-logout" style="background: #f1f5f9; font-weight: 700; padding: 0.65rem 1.25rem;">
+          👁️ Preview Certificate
+        </a>
+        <button type="button" id="streakCertSendBtn" class="btn-notebook-save" style="background: #ea580c; padding: 0.65rem 1.25rem; font-size: 0.95rem;">
+          ✉️ Email My Certificate
+        </button>
+      </div>
+    </div>
+
+    <!-- 7-Day Activity Visual Tracker -->
+    <div class="week-tracker-card">
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;">
+        <span>📅</span> Past 7 Days Activity
+      </h3>
+      <p style="color: #64748b; font-size: 0.875rem; margin-top: 0.25rem;">
+        Write at least one To-Do list or note every day to fill the flame bubble!
+      </p>
+
+      <div class="week-days-flex">
+        <% last7Days.forEach(day => { %>
+          <div class="day-circle-box">
+            <span style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase;">
+              <%= day.dayName %>
+            </span>
+
+            <div class="day-bubble <%= day.isCompleted ? 'done' : (day.isToday ? 'today-pending' : '') %>">
+              <% if (day.isCompleted) { %>
+                🔥
+              <% } else if (day.isToday) { %>
+                ⏳
+              <% } else { %>
+                ○
+              <% } %>
+            </div>
+
+            <span style="font-size: 0.75rem; color: <%= day.isToday ? '#ea580c; font-weight:700;' : '#94a3b8;' %>">
+              <%= day.isToday ? 'Today' : day.dayNumber %>
+            </span>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <!-- Daily Student Motivation Quote -->
+    <div style="background: #ffffff; border-radius: 12px; padding: 1.5rem 2rem; border-left: 5px solid #4f46e5; box-shadow: var(--shadow-card); margin-bottom: 2rem;">
+      <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #4f46e5; letter-spacing: 0.05em; margin-bottom: 0.4rem;">
+        💡 Student Motivation of the Day
+      </div>
+      <div style="font-family: 'Kalam', cursive; font-size: 1.35rem; color: #334155; line-height: 1.5;">
+        <%= quote %>
+      </div>
+    </div>
+
+    <!-- Achievements & Badges Showcase -->
+    <div style="margin-top: 2rem;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;">
+        <span>🎖️</span> Student Habit Badges
+      </h3>
+      <p style="color: #64748b; font-size: 0.875rem;">
+        Unlock special awards by maintaining discipline, taking notes, and completing Pomodoro sessions.
+      </p>
+
+      <% const badges = student.badges || []; %>
+
+      <div class="badges-container">
+        <!-- Badge 1: First Step -->
+        <div class="badge-card <%= badges.includes('first_step') ? '' : 'locked' %>">
+          <div class="badge-icon">🌱</div>
+          <div class="badge-info">
+            <h5>First Step</h5>
+            <p><%= badges.includes('first_step') ? 'Unlocked! Created 1st note' : 'Create 1st note to unlock' %></p>
+          </div>
+        </div>
+
+        <!-- Badge 2: 3-Day Streak -->
+        <div class="badge-card <%= badges.includes('three_day_streak') ? '' : 'locked' %>">
+          <div class="badge-icon">⚡</div>
+          <div class="badge-info">
+            <h5>3-Day Momentum</h5>
+            <p><%= badges.includes('three_day_streak') ? 'Unlocked! 3-day active streak' : 'Maintain a 3-day streak' %></p>
+          </div>
+        </div>
+
+        <!-- Badge 3: Focus Initiate (Pomodoro) -->
+        <div class="badge-card <%= badges.includes('focus_initiate') ? '' : 'locked' %>">
+          <div class="badge-icon">🍅</div>
+          <div class="badge-info">
+            <h5>Focus Initiate</h5>
+            <p><%= badges.includes('focus_initiate') ? 'Unlocked! Completed 1st Pomodoro' : 'Complete 1 Pomodoro session' %></p>
+          </div>
+        </div>
+
+        <!-- Badge 4: Deep Worker (Pomodoro streak) -->
+        <div class="badge-card <%= badges.includes('deep_worker') ? '' : 'locked' %>">
+          <div class="badge-icon">🧘</div>
+          <div class="badge-info">
+            <h5>Deep Worker</h5>
+            <p><%= badges.includes('deep_worker') ? 'Unlocked! 3-day Pomodoro streak' : 'Maintain 3-day Pomodoro streak' %></p>
+          </div>
+        </div>
+
+        <!-- Badge 5: Week Warrior -->
+        <div class="badge-card <%= badges.includes('week_warrior') ? '' : 'locked' %>">
+          <div class="badge-icon">👑</div>
+          <div class="badge-info">
+            <h5>Study Champion</h5>
+            <p><%= badges.includes('week_warrior') ? 'Unlocked! 7-day active streak' : 'Maintain a 7-day streak' %></p>
+          </div>
+        </div>
+
+        <!-- Badge 6: Planner Pro -->
+        <div class="badge-card <%= badges.includes('planner_pro') ? '' : 'locked' %>">
+          <div class="badge-icon">📝</div>
+          <div class="badge-info">
+            <h5>Master Planner</h5>
+            <p><%= badges.includes('planner_pro') ? 'Unlocked! 5+ to-do lists' : 'Create 5+ to-do lists' %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sendBtn = document.getElementById('streakCertSendBtn');
+    if (sendBtn) {
+      sendBtn.addEventListener('click', async () => {
+        sendBtn.disabled = true;
+        sendBtn.textContent = '⏳ Sending...';
+
+        try {
+          const res = await fetch('/api/send-certificate', { method: 'POST' });
+          const data = await res.json();
+          if (data.success) {
+            let msg = `🏆 Certificate successfully emailed to ${data.certificate.recipientEmail}!\nCertificate ID: ${data.certificate.id}`;
+            if (data.emailResult && data.emailResult.previewUrl) {
+              msg += `\n\n📫 Test Email Preview:\n${data.emailResult.previewUrl}`;
+              window.open(data.emailResult.previewUrl, '_blank');
+            }
+            alert(msg);
+          } else {
+            alert('Failed: ' + (data.error || 'Unknown error'));
+          }
+        } catch(e) {
+          alert('Error: ' + e.message);
+        } finally {
+          sendBtn.disabled = false;
+          sendBtn.textContent = '✉️ Email My Certificate';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

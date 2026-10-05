@@ -1,0 +1,140 @@
+{
+  "alex_cs": {
+    "username": "alex_cs",
+    "email": "alex.rivera@university.edu",
+    "displayName": "Alex Rivera",
+    "grade": "Computer Science",
+    "cookieConsent": true,
+    "rememberMe": true,
+    "currentStreak": 5,
+    "longestStreak": 12,
+    "lastActiveDate": "2026-10-05",
+    "todoCount": 8,
+    "notesCount": 4,
+    "history": [
+      "2026-10-01",
+      "2026-10-02",
+      "2026-10-03",
+      "2026-10-04",
+      "2026-10-05"
+    ],
+    "badges": [
+      "first_step",
+      "three_day_streak",
+      "planner_pro",
+      "focus_initiate",
+      "deep_worker"
+    ],
+    "pomodoro": {
+      "currentStreak": 4,
+      "longestStreak": 8,
+      "lastActiveDate": "2026-10-05",
+      "totalSessions": 16,
+      "totalMinutes": 400,
+      "history": [
+        "2026-10-02",
+        "2026-10-03",
+        "2026-10-04",
+        "2026-10-05"
+      ]
+    },
+    "certificates": [
+      {
+        "id": "CERT-2026-WK41-ALEX_CS",
+        "weekNumber": 41,
+        "weekTitle": "Week 41, 2026",
+        "issuedAt": "2026-10-05T17:50:29.637Z",
+        "recipientName": "Alex Rivera",
+        "recipientEmail": "alex.rivera@university.edu",
+        "grade": "Computer Science",
+        "todoStreak": 5,
+        "pomodoroStreak": 4,
+        "totalFocusMinutes": 400,
+        "totalSessions": 16,
+        "emailSent": true,
+        "emailPreviewUrl": "https://ethereal.email/message/asPjZWc.LidMx78MasPjacAYPlgYiIl4AAAAATTsySD1GzSIBw6cIjJsmzg",
+        "messageId": "<bcd53cc6-73cd-c8cd-1ceb-01fbfc89beb0@studentnotebook.edu>"
+      }
+    ],
+    "createdAt": "2026-09-20T10:00:00.000Z"
+  },
+  "maya_bio": {
+    "username": "maya_bio",
+    "email": "maya.lin@premed.edu",
+    "displayName": "Maya Lin",
+    "grade": "Pre-Med Biology",
+    "cookieConsent": true,
+    "rememberMe": true,
+    "currentStreak": 3,
+    "longestStreak": 7,
+    "lastActiveDate": "2026-10-04",
+    "todoCount": 6,
+    "notesCount": 7,
+    "history": [
+      "2026-10-02",
+      "2026-10-03",
+      "2026-10-04"
+    ],
+    "badges": [
+      "first_step",
+      "three_day_streak",
+      "focus_initiate"
+    ],
+    "pomodoro": {
+      "currentStreak": 3,
+      "longestStreak": 5,
+      "lastActiveDate": "2026-10-04",
+      "totalSessions": 8,
+      "totalMinutes": 200,
+      "history": [
+        "2026-10-02",
+        "2026-10-03",
+        "2026-10-04"
+      ]
+    },
+    "certificates": [],
+    "createdAt": "2026-09-25T11:00:00.000Z"
+  },
+  "shresthpriyanshu": {
+    "username": "shresthpriyanshu",
+    "email": "shresthpriyanshu436@gmail.com",
+    "displayName": "Shresth",
+    "grade": "Computer Science",
+    "cookieConsent": true,
+    "rememberMe": true,
+    "currentStreak": 0,
+    "longestStreak": 0,
+    "lastActiveDate": null,
+    "todoCount": 0,
+    "notesCount": 0,
+    "history": [],
+    "badges": [],
+    "pomodoro": {
+      "currentStreak": 0,
+      "longestStreak": 0,
+      "lastActiveDate": null,
+      "totalSessions": 0,
+      "totalMinutes": 0,
+      "history": []
+    },
+    "certificates": [
+      {
+        "id": "CERT-2026-WK41-SHRESTHPRIYANSHU",
+        "weekNumber": 41,
+        "weekTitle": "Week 41, 2026",
+        "issuedAt": "2026-10-05T17:54:38.689Z",
+        "recipientName": "Shresth",
+        "recipientEmail": "shresthpriyanshu436@gmail.com",
+        "grade": "Computer Science",
+        "todoStreak": 1,
+        "pomodoroStreak": 0,
+        "totalFocusMinutes": 0,
+        "totalSessions": 0,
+        "emailSent": true,
+        "emailPreviewUrl": "https://ethereal.email/message/asPkPmc.LidMx9p-asPkYVz99noLdHXcAAAAAhd-cnKOZQ0h3SAgBb.p9Ug",
+        "messageId": "<2ed4f95e-a7ee-f215-0ed5-15bb9eb3ec8d@studentnotebook.edu>"
+      }
+    ],
+    "createdAt": "2026-10-05T17:53:01.396Z"
+  }
+}

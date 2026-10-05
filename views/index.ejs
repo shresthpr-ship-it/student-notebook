@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Notebook - Desk &amp; To-Do Manager</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Top Desk Navigation -->
+  <nav class="desk-nav">
+    <a href="/" class="desk-logo">
+      <span>📓</span>
+      <div>
+        <div>Student Notebook</div>
+        <div style="font-size: 0.75rem; color: #64748b; font-weight: 500;">Node.js • Express • File System (fs)</div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <!-- Pomodoro Room Link & Streak -->
+      <a href="/pomodoro" class="streak-pill" style="background:#fef2f2; border-color:#fecaca; color:#b91c1c;" title="Enter Pomodoro Focus Room">
+        <span class="streak-flame">🍅</span>
+        <span><%= student.pomodoro?.currentStreak || 0 %>d Pomo</span>
+      </a>
+
+      <!-- Daily To-Do Streak Badge -->
+      <a href="/streak" class="streak-pill" title="View Daily Streak Analytics">
+        <span class="streak-flame">🔥</span>
+        <span><%= student.currentStreak || 0 %>d Streak</span>
+      </a>
+
+      <!-- Certificate Link -->
+      <a href="/certificate" style="font-size:0.875rem; font-weight:700; color:#ca8a04; text-decoration:none; padding:0.35rem 0.65rem; border-radius:6px; background:#fefce8; border:1px solid #fef08a;">
+        🏆 Certificate
+      </a>
+
+      <!-- Student Profile -->
+      <div class="student-tag">
+        <span>👨‍🎓</span>
+        <span><%= student.displayName %></span>
+      </div>
+
+      <a href="/logout" class="btn-logout">Sign Out</a>
+    </div>
+  </nav>
+
+  <div class="desk-container">
+    <!-- Main Interactive Writing Notebook -->
+    <div class="notebook-binder">
+      <!-- Spiral Ring Binding Header -->
+      <div class="spiral-header">
+        <% for(let i = 0; i < 18; i++) { %>
+          <div class="spiral-ring"></div>
+        <% } %>
+      </div>
+
+      <!-- Notebook Page -->
+      <div class="notebook-page paper-lined" id="activeNotebookPage">
+        <form action="/create" method="POST" id="notebookForm">
+          <!-- Hidden category input -->
+          <input type="hidden" name="category" id="selectedCategory" value="TO DO LIST">
+
+          <!-- 1. What do we want to write? -->
+          <div class="writing-type-selector">
+            <span class="section-label">✏️ What do you want to write today?</span>
+            <div class="type-buttons-group">
+              <button type="button" class="btn-type-choice active" data-type="TO DO LIST">
+                <span>📝</span> TO DO LIST
+              </button>
+              <button type="button" class="btn-type-choice" data-type="Class Notes">
+                <span>🎓</span> Class Notes
+              </button>
+              <button type="button" class="btn-type-choice" data-type="Journal">
+                <span>📖</span> Daily Journal
+              </button>
+              <button type="button" class="btn-type-choice" data-type="Assignment">
+                <span>🎯</span> Assignment Plan
+              </button>
+              <button type="button" class="btn-type-choice" data-type="Quick Thought">
+                <span>💡</span> Quick Thought
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Writing & Styling Options Toolbar -->
+          <div class="toolbar-row">
+            <div class="toolbar-item">
+              <label for="fontSelector">✍️ Writing Font</label>
+              <select name="font" id="fontSelector">
+                <option value="font-handwriting" selected>Handwriting (Caveat)</option>
+                <option value="font-kalam">Casual Pen (Kalam)</option>
+                <option value="font-patrick">Marker (Patrick Hand)</option>
+                <option value="font-typewriter">Typewriter (Space Mono)</option>
+                <option value="font-clean">Clean Modern (Inter)</option>
+              </select>
+            </div>
+
+            <div class="toolbar-item">
+              <label for="paperSelector">📄 Paper Style</label>
+              <select name="paper" id="paperSelector">
+                <option value="paper-lined" selected>Lined Ruled Notebook</option>
+                <option value="paper-grid">Math / Graph Grid</option>
+                <option value="paper-dots">Dotted Bullet Journal</option>
+                <option value="paper-yellow">Yellow Legal Notepad</option>
+              </select>
+            </div>
+
+            <div class="toolbar-item">
+              <label for="inkSelector">🖋️ Ink Color</label>
+              <select name="ink" id="inkSelector">
+                <option value="ink-blue" selected>Royal Blue Pen</option>
+                <option value="ink-black">Gel Black Ink</option>
+                <option value="ink-red">Correction Red Ink</option>
+                <option value="ink-purple">Violet Ink</option>
+                <option value="ink-pencil">Graphite Pencil</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Title Input -->
+          <div>
+            <input 
+              type="text" 
+              name="title" 
+              id="taskTitle" 
+              class="form-title-input font-handwriting ink-blue" 
+              placeholder="Today's Study & Task Checklist"
+              value="Today's Study & Task Checklist"
+              required 
+              autocomplete="off"
+            >
+          </div>
+
+          <!-- Textarea (Ruled / Grid / Dotted) -->
+          <div>
+            <textarea 
+              name="description" 
+              id="noteTextarea" 
+              class="form-notebook-textarea font-handwriting ink-blue" 
+              placeholder="Write your to-do items or lecture notes here..."
+              rows="7"
+            >[ ] Review Lecture 4 notes
+[ ] Solve practice problems 1 to 10
+[ ] Prepare questions for professor
+[ ] 30-minute reading session
+[ ] Organize study desk</textarea>
+          </div>
+
+          <!-- Submit Bar -->
+          <div class="notebook-submit-bar">
+            <div style="font-size: 0.85rem; color: #64748b; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🔥</span>
+              <span>Writing your <strong>TO DO LIST</strong> daily maintains your student streak!</span>
+            </div>
+
+            <button type="submit" class="btn-notebook-save">
+              <span>📌</span> Pin to Notebook (.txt)
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Saved Tasks & Notes Section -->
+    <section>
+      <div class="filter-bar">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: #1e293b;">
+            📚 My Saved Notes &amp; Tasks
+          </h2>
+          <span style="background: #e2e8f0; color: #475569; font-weight: 700; font-size: 0.8rem; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+            <%= tasks.length %>
+          </span>
+        </div>
+
+        <!-- Filter by Category -->
+        <div class="filter-pills">
+          <a href="/?category=ALL" class="filter-pill <%= activeFilter === 'ALL' ? 'active' : '' %>">All</a>
+          <a href="/?category=TO DO LIST" class="filter-pill <%= activeFilter === 'TO DO LIST' ? 'active' : '' %>">📝 To-Do</a>
+          <a href="/?category=Class Notes" class="filter-pill <%= activeFilter === 'Class Notes' ? 'active' : '' %>">🎓 Notes</a>
+          <a href="/?category=Journal" class="filter-pill <%= activeFilter === 'Journal' ? 'active' : '' %>">📖 Journal</a>
+          <a href="/?category=Assignment" class="filter-pill <%= activeFilter === 'Assignment' ? 'active' : '' %>">🎯 Assignment</a>
+          <a href="/?category=Quick Thought" class="filter-pill <%= activeFilter === 'Quick Thought' ? 'active' : '' %>">💡 Ideas</a>
+        </div>
+      </div>
+
+      <% if (tasks && tasks.length > 0) { %>
+        <div class="notes-grid">
+          <% tasks.forEach(task => { %>
+            <% 
+              let catClass = 'cat-todo';
+              if (task.metadata.category === 'Class Notes') catClass = 'cat-notes';
+              else if (task.metadata.category === 'Journal') catClass = 'cat-journal';
+              else if (task.metadata.category === 'Assignment') catClass = 'cat-assignment';
+              else if (task.metadata.category === 'Quick Thought') catClass = 'cat-quick';
+            %>
+            <div class="note-card <%= task.metadata.paper || 'paper-lined' %>">
+              <!-- Top Ring Binding for card -->
+              <div class="note-card-rings">
+                <div class="note-card-ring"></div>
+                <div class="note-card-ring"></div>
+                <div class="note-card-ring"></div>
+              </div>
+
+              <div>
+                <div class="card-top">
+                  <span class="category-tag <%= catClass %>">
+                    <%= task.metadata.category || 'NOTE' %>
+                  </span>
+                  <span style="font-size: 0.72rem; color: #94a3b8; font-family: monospace;">
+                    <%= task.filename %>
+                  </span>
+                </div>
+
+                <h3 class="card-title <%= task.metadata.font || 'font-handwriting' %> <%= task.metadata.ink || 'ink-blue' %>">
+                  <%= task.title %>
+                </h3>
+
+                <p class="card-preview <%= task.metadata.font || 'font-handwriting' %> <%= task.metadata.ink || 'ink-blue' %>">
+                  <%= task.preview %>
+                </p>
+              </div>
+
+              <div class="card-footer">
+                <a href="/task/<%= encodeURIComponent(task.filename) %>" class="btn-read-notebook">
+                  Read More &rarr;
+                </a>
+
+                <form action="/delete/<%= encodeURIComponent(task.filename) %>" method="POST" onsubmit="return confirm('Tear this page out of your notebook?');">
+                  <button type="submit" class="btn-delete-note" title="Delete Note">
+                    🗑️
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div style="background: white; border-radius: 14px; padding: 3.5rem 2rem; text-align: center; border: 2px dashed #cbd5e1; color: #64748b;">
+          <div style="font-size: 3rem; margin-bottom: 0.5rem;">📖</div>
+          <h3 style="color: #1e293b; margin-bottom: 0.5rem;">No pages found in this section</h3>
+          <p>Choose an option above (like TO DO LIST or Class Notes) and save your first task!</p>
+        </div>
+      <% } %>
+    </section>
+  </div>
+
+  <!-- Cookie Consent Banner -->
+  <% if (!hasCookieConsent) { %>
+    <div id="cookieBanner" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 600px; width: 90%; background: #0f172a; color: #f8fafc; padding: 1.25rem 1.75rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 9999; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border: 1px solid #334155;">
+      <div style="font-size: 0.85rem; line-height: 1.5;">
+        🍪 <strong>Cookie &amp; Habit Consent</strong>: We use cookies to remember your student session, preserve your login, and track your daily Pomodoro &amp; To-Do streaks.
+      </div>
+      <button type="button" id="acceptCookiesBtn" style="background: #2563eb; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">
+        Accept Cookies
+      </button>
+    </div>
+
+    <script>
+      const cookieBanner = document.getElementById('cookieBanner');
+      const acceptBtn = document.getElementById('acceptCookiesBtn');
+      if (acceptBtn && cookieBanner) {
+        acceptBtn.addEventListener('click', async () => {
+          try {
+            await fetch('/api/cookie-consent', { method: 'POST' });
+          } catch(e) {}
+          cookieBanner.style.display = 'none';
+        });
+      }
+    </script>
+  <% } %>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

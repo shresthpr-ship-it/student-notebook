@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Notebook - Login &amp; Streaks</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="background: #252b36;">
+  <div class="desk-container login-cover-wrap">
+    <div class="notebook-cover">
+      <!-- Spiral spine effect -->
+      <div style="position: absolute; left: -16px; top: 25px; bottom: 25px; display: flex; flex-direction: column; justify-content: space-between;">
+        <% for(let i = 0; i < 10; i++) { %>
+          <div style="width: 24px; height: 12px; background: linear-gradient(to right, #64748b, #cbd5e1, #475569); border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);"></div>
+        <% } %>
+      </div>
+
+      <!-- Front Cover Sticker Label -->
+      <div class="notebook-label-sticker">
+        <h2>📓 Student Notebook</h2>
+        <p>Daily To-Do, Pomodoro Room &amp; Habit Streaks</p>
+
+        <% if (error) { %>
+          <div style="background: #fee2e2; color: #dc2626; padding: 0.5rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem; text-align: center;">
+            <%= error %>
+          </div>
+        <% } %>
+
+        <form action="/login" method="POST">
+          <div>
+            <label for="username" style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.3rem;">
+              STUDENT ID / USERNAME *
+            </label>
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              class="login-input" 
+              placeholder="e.g. alex_runner" 
+              required 
+              autofocus
+            >
+          </div>
+
+          <div>
+            <label for="email" style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.3rem;">
+              EMAIL ADDRESS (FOR WEEKLY CERTIFICATES) *
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="login-input" 
+              placeholder="alex.rivera@university.edu" 
+              required
+            >
+          </div>
+
+          <div>
+            <label for="studentName" style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.3rem;">
+              YOUR FULL NAME (OPTIONAL)
+            </label>
+            <input 
+              type="text" 
+              id="studentName" 
+              name="studentName" 
+              class="login-input" 
+              placeholder="e.g. Alex Rivera"
+            >
+          </div>
+
+          <div>
+            <label for="grade" style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.3rem;">
+              GRADE / MAJOR (OPTIONAL)
+            </label>
+            <input 
+              type="text" 
+              id="grade" 
+              name="grade" 
+              class="login-input" 
+              placeholder="e.g. Computer Science or Grade 12"
+            >
+          </div>
+
+          <!-- Cookie & Remember Login Options -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.85rem; margin-bottom: 1.25rem;">
+            <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; color: #334155; margin-bottom: 0.5rem; cursor: pointer;">
+              <input type="checkbox" name="rememberMe" id="rememberMe" checked style="margin-top: 2px;">
+              <span><strong>Remember login info</strong> on this device (stores persistent login cookie).</span>
+            </label>
+
+            <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; color: #334155; cursor: pointer;">
+              <input type="checkbox" name="cookieConsent" id="cookieConsent" checked style="margin-top: 2px;">
+              <span><strong>Consent to cookies</strong> for tracking daily study habits &amp; streaks.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-open-notebook">
+            📖 Open Notebook &amp; Start Focusing
+          </button>
+        </form>
+
+        <!-- Quick Demo Profiles -->
+        <div style="margin-top: 1.25rem; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 0.85rem;">
+          <span style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.5rem;">
+            QUICK LOGIN DEMO PROFILES:
+          </span>
+          <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+            <button type="button" onclick="fillProfile('alex_cs', 'alex.rivera@university.edu', 'Alex Rivera', 'Computer Science')" style="background:#e2e8f0; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; cursor:pointer; font-weight:600;">
+              👤 Alex (CS)
+            </button>
+            <button type="button" onclick="fillProfile('maya_bio', 'maya.lin@premed.edu', 'Maya Lin', 'Pre-Med Biology')" style="background:#e2e8f0; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; cursor:pointer; font-weight:600;">
+              👤 Maya (Bio)
+            </button>
+            <button type="button" onclick="fillProfile('jordan_grade10', 'jordan.smith@school.org', 'Jordan Smith', 'Grade 10')" style="background:#e2e8f0; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; cursor:pointer; font-weight:600;">
+              👤 Jordan (Grade 10)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function fillProfile(username, email, name, grade) {
+      document.getElementById('username').value = username;
+      document.getElementById('email').value = email;
+      document.getElementById('studentName').value = name;
+      document.getElementById('grade').value = grade;
+    }
+  </script>
+</body>
+</html>

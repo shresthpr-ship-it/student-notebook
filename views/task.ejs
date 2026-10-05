@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Student Notebook</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Top Desk Navigation -->
+  <nav class="desk-nav">
+    <a href="/" class="desk-logo">
+      <span>📓</span>
+      <div>
+        <div>Student Notebook</div>
+        <div style="font-size: 0.75rem; color: #64748b;">Viewing Page: <%= filename %></div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="/streak" class="streak-pill">
+        <span class="streak-flame">🔥</span>
+        <span><%= student.currentStreak || 0 %> Day Streak</span>
+      </a>
+      <a href="/" class="btn-logout" style="color: #4f46e5; background: #eef2ff;">
+        &larr; Back to Desk
+      </a>
+    </div>
+  </nav>
+
+  <div class="desk-container">
+    <div class="open-notebook">
+      <!-- Leather Cover Header -->
+      <div class="notebook-leather-edge">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 1.25rem;">🔖</span>
+          <span style="font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            <%= metadata.category || 'NOTEBOOK ENTRY' %>
+          </span>
+        </div>
+        <div style="font-size: 0.8rem; opacity: 0.85;">
+          File: <code><%= filename %></code>
+        </div>
+      </div>
+
+      <!-- Spiral Ring Binding Header -->
+      <div class="spiral-header">
+        <% for(let i = 0; i < 18; i++) { %>
+          <div class="spiral-ring"></div>
+        <% } %>
+      </div>
+
+      <!-- Open Page Body with Ruled/Grid/Dots & Selected Ink -->
+      <div class="open-page-body <%= metadata.paper || 'paper-lined' %>">
+        <!-- Title -->
+        <h1 class="detail-title <%= metadata.font || 'font-handwriting' %> <%= metadata.ink || 'ink-blue' %>">
+          <%= title %>
+        </h1>
+
+        <!-- Metadata Subtitle -->
+        <div class="detail-meta-row">
+          <span>✍️ <strong>Author:</strong> <%= metadata.author || student.displayName %></span>
+          <span>📅 <strong>Date:</strong> <%= new Date(metadata.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></span>
+          <span>📄 <strong>Paper:</strong> <%= (metadata.paper || 'lined').replace('paper-', '') %></span>
+        </div>
+
+        <!-- Body Content -->
+        <div class="detail-text-content <%= metadata.font || 'font-handwriting' %> <%= metadata.ink || 'ink-blue' %>" id="interactiveDetailText">
+          <% 
+            const lines = (body || '').split(/\r?\n/);
+            lines.forEach(line => {
+              if (line.trim().startsWith('[ ]') || line.trim().startsWith('[x]')) {
+                const isChecked = line.trim().startsWith('[x]');
+                const taskLabel = line.replace(/^\s*\[[ x]\]\s*/, '');
+          %>
+            <div class="todo-line" style="display: flex; align-items: center; gap: 0.65rem; margin: 0.35rem 0; <%= isChecked ? 'text-decoration: line-through; opacity: 0.6;' : '' %>">
+              <input type="checkbox" class="todo-checkbox" <%= isChecked ? 'checked' : '' %> style="transform: scale(1.3); cursor: pointer;">
+              <span><%= taskLabel %></span>
+            </div>
+          <% } else { %>
+            <div><%= line || '\u00A0' %></div>
+          <% } }); %>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="notebook-submit-bar" style="margin-top: 3rem;">
+          <a href="/" class="btn-read-notebook" style="font-size: 1rem;">
+            &larr; Back to All Notes
+          </a>
+
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <button type="button" onclick="window.print()" class="btn-read-notebook" style="cursor: pointer; background: transparent; border: none;">
+              🖨️ Print / Save PDF
+            </button>
+
+            <form action="/delete/<%= encodeURIComponent(filename) %>" method="POST" onsubmit="return confirm('Permanently remove this note from your notebook?');">
+              <button type="submit" class="btn-delete-note" style="color: #ef4444; font-weight: 700; display: flex; align-items: center; gap: 0.35rem;">
+                <span>🗑️</span> Tear Page Out
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
